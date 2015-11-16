@@ -375,6 +375,13 @@
     };
 
     if(!window.vitologi)window.vitologi = {};
+    if(!window.vitologi._classes)window.vitologi._classes = {};
+
+    window.vitologi._classes.Inputtags = Inputtags;
+    window.vitologi._classes.Cursor = Cursor;
+    window.vitologi._classes.Tag = Tag;
+    window.vitologi._classes.SourceList = SourceList;
+
     window.vitologi.inputtags = function(elem, parameters){return new Inputtags(elem, parameters);};
 
 })(window);
