@@ -1,6 +1,6 @@
 Package.describe({
   name: 'vitologi:inputtags',
-  version: '0.9.1',
+  version: '0.9.3',
   summary: 'Converts your input to field of tags.',
   git: 'https://github.com/Vitologi/inputtags.git',
   documentation: 'README.md'
@@ -9,6 +9,6 @@ Package.describe({
 Package.onUse(function(api) {
   api.versionsFrom('1.2.1');
   api.use('ecmascript');
-  api.addFiles(['inputtags.js', 'inputtags.css'], 'client');
+  api.addFiles(['src/inputtags.js', 'src/inputtags.css'], 'client');
 });
 
