@@ -18,11 +18,12 @@
 <div id="simpleShow"></div>
 <script>
     var simple = document.getElementById("simple"),
-        simpleInputtags = new Inputtags(simple);
+        simpleInputtags = new Inputtags(simple,{
+            "onChange":function(){
+                document.getElementById("simpleShow").innerHTML = JSON.stringify(this.getVal());
+            }
+        });
 
-    simple.oninput = function(){
-        document.getElementById("simpleShow").innerHTML = this.value;
-    }
 </script>
 
 </body>

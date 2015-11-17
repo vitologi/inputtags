@@ -11,6 +11,12 @@
 
     "use strict";
 
+    var InputtagsError = function(msg){
+        this.msg = msg;
+        console.log(this.msg);
+    };
+    InputtagsError.prototype = new Error();
+
     /**
      * Merge objects
      *
@@ -18,7 +24,7 @@
      * @private
      */
     var _extend = function _extend() {
-            if(typeof arguments[0] !== "object")throw new Error("Can`t merge this shit.");
+            if(typeof arguments[0] !== "object")throw new InputtagsError("Can`t merge this shit.");
 
             var base = arguments[0],
                 i=1, len = arguments.length,
@@ -39,187 +45,29 @@
         },
 
         /**
-         * Plugin inputtags constructor
+         * Default configuration for extend Inputtags
          *
-         * @param {HTMLElement} element  DOM element for extend
-         * @param {Object} parameters some parameters
-         * @constructor
+         * @type {{
+         *      _inputtags: null,
+         *      _cursor: null,
+         *      _sourceList: null,
+         *      duplicate: boolean,
+         *      keyName: boolean,
+         *      valueName: boolean,
+         *      getInputtagsClass: Function,
+         *      getCursorClass: Function,
+         *      getTagClass: Function,
+         *      getTagRemoverClass: Function,
+         *      getSourceListClass: Function,
+         *      getSourceItemClass: Function,
+         *      source: Function,
+         *      cursorHandler: Function,
+         *      addTag: Function,
+         *      removeTag: Function,
+         *      sourceListHandler: Function
+         *      }}
          */
-        Inputtags = function Inputtags(element, parameters){
-
-            if(!(element instanceof HTMLElement))throw new Error("Wrong argument for create inputtag. Provide " + (typeof element) + "(HTMLElement need)");
-
-            this.parameters = parameters;
-            this.getRaw = function(){return element;};
-            this.initialize();
-        },
-
-        /**
-         * Object-tag
-         *
-         * @constructor
-         */
-        Tag = function Tag(item, parameters){
-            var _this = this,
-                inputtags = parameters._inputtags,
-                sourceList = parameters._sourceList,
-                view = document.createElement('span'),
-                text = document.createElement('span'),
-                remover = document.createElement('span'),
-                name, temp;
-
-            // create right item
-            switch (typeof item){
-
-                case "string":
-
-                    name = item;
-
-                    if(parameters.keyName && parameters.valueName){
-                        temp = {};
-                        temp[parameters.keyName] = temp[parameters.valueName] = item;
-                        item = temp;
-                    }else if(parameters.keyName || parameters.valueName){
-                        throw new Error("Some of item properties is not defined in options (set keyName and valueName).");
-                    }
-
-                    break;
-
-                case "object":
-
-                    if(item.keyName?!item.valueName:item.valueName){
-                        throw new Error("Some of item properties is not defined (set keyName or valueName).");
-                    }
-
-                    name = item[parameters.valueName];
-
-                    break;
-
-                default:
-                    throw new Error("Tags type can be only string or object.");
-                    break;
-
-            }
-
-            if(
-                !parameters.duplicate
-                && inputtags.hasVal(item)
-            ){
-                return;
-            }
-
-            text.innerHTML = name;
-            remover.innerHTML = "x";
-
-            view.appendChild(text);
-            view.appendChild(remover);
-            view.setAttribute("class", parameters.getTagClass(_this));
-            remover.setAttribute("class", parameters.getTagRemoverClass(_this));
-
-            // Remove tag from dom tree and from tag list
-            remover.addEventListener("click", function(){
-                parameters.removeTag.call(parameters._inputtags, _this);
-            });
-
-            // get tag value
-            _this.getVal = function(){
-                return item;
-            };
-
-            // get tag dom element
-            _this.getView = function(){
-                return view;
-            };
-
-            parameters.addTag.call(parameters._inputtags, _this);
-            sourceList.removeAllItems();
-        },
-
-        /**
-         * Object-cursor for tags
-         *
-         * @constructor
-         */
-        Cursor = function Cursor(callback, parameters){
-            var _this = this,
-                view = document.createElement('input');
-
-            parameters._cursor = _this;
-            view.setAttribute("class", parameters.getCursorClass(_this));
-
-            // get cursor value
-            _this.getVal = function(){
-                return view.value;
-            };
-
-            // get cursor dom element
-            _this.getView = function(){
-                return view;
-            };
-
-            // set cursor value
-            _this.setVal = function(val){
-                return view.value = val;
-            };
-
-            view.addEventListener("keydown", function(e){
-                if(callback.call(parameters._inputtags, e)){
-                    _this.setVal("");
-                }
-            });
-
-        },
-
-        /**
-         * Source list
-         *
-         * @constructor
-         */
-        SourceList = function SourceList(callback, parameters){
-            var _this = this,
-                cursor = parameters._cursor,
-                view = document.createElement('div');
-
-            parameters._sourceList = _this;
-            view.setAttribute("class", parameters.getSourceListClass(_this));
-            view.setAttribute("style", "display:none;");
-
-            // remove items
-            _this.removeAllItems = function(){
-                while (view.firstChild) {
-                    view.removeChild(view.firstChild);
-                }
-                view.setAttribute("style", "display:none;");
-            };
-
-            // add item to source list
-            _this.addItem = function(item){
-                var itemView = document.createElement('a'),
-                    name = (parameters.valueName?item[parameters.valueName]:item);
-
-                itemView.setAttribute("href", "#");
-                itemView.setAttribute("class", parameters.getSourceItemClass(item));
-                itemView.innerHTML = name;
-                view.appendChild(itemView);
-                view.setAttribute("style", "");
-
-                itemView.addEventListener("click", function(e){
-                    if(callback.call(parameters._inputtags, item, e)){
-                        _this.removeAllItems();
-                        cursor.setVal("");
-                    }
-                });
-            };
-
-            // get cursor dom element
-            _this.getView = function(){
-                return view;
-            };
-
-
-        },
-
-        defaultParameters = {
+        defaults = {
             "_inputtags":null,
             "_cursor":null,
             "_sourceList":null,
@@ -237,6 +85,7 @@
             "getSourceItemClass": function(item){return "bInputtags__sourceItem";},
 
             "source":function(item){return [];},
+            "onChange":function(){},
             "cursorHandler": function(e){
                 var params = this.parameters,
                     cursor = params._cursor,
@@ -265,23 +114,32 @@
 
             },
 
+            "sourceListHandler": function(item){
+                var params = this.parameters,
+                    inputtags = params._inputtags;
+
+                if(inputtags.hasVal(item)){
+                    return false;
+                }
+
+                new Tag(item, params);
+
+                return true;
+
+            },
+
             "addTag":function(tag){
                 var params = this.parameters,
-                    inputtags = params._inputtags,
-                    cursorView = params._cursor.getView(),
-                    raw = params._inputtags.getRaw();
+                    cursorView = params._cursor.getView();
 
                 params._tags.push(tag);
                 cursorView.parentNode.insertBefore(tag.getView(), cursorView);
-                raw.setAttribute("value", JSON.stringify(inputtags.getVal()));
             },
 
             "removeTag":function(tag){
                 var params = this.parameters,
-                    inputtags = params._inputtags,
                     sourceList = params._sourceList,
                     tags = params._tags,
-                    raw = params._inputtags.getRaw(),
                     i=0, len= tags.length;
 
                 for(; i<len; i++){
@@ -290,49 +148,35 @@
 
                 sourceList.removeAllItems();
                 tag.getView().parentNode.removeChild(tag.getView());
-                raw.setAttribute("value", JSON.stringify(inputtags.getVal()));
-            },
-
-            "sourceHandler": function(item){
-                var params = this.parameters,
-                    inputtags = params._inputtags;
-
-                if(
-                    !params.duplicate
-                    && inputtags.hasVal(item)
-                 ){
-                    return false;
-                }
-
-                new Tag(item, params);
-
-                return true;
-
             }
 
-        };
+        },
 
+        /**
+         * Plugin inputtags constructor
+         *
+         * @param {HTMLElement} element  DOM element for extend
+         * @param {Object} parameters some parameters
+         * @constructor
+         */
+        Inputtags = function Inputtags(element, parameters){
 
-    Inputtags.prototype = {
-        "constructor": Inputtags,
-        "parameters": null,
+            if(!(element instanceof HTMLElement))throw new InputtagsError("Wrong argument for create inputtag. Provide " + (typeof element) + "(HTMLElement need)");
 
-        "initialize":function(){
+            var _this       = this,
+                params      = _this.parameters  = _extend({"_tags": []}, defaults, parameters),
+                raw         = _this.raw         = element,
+                view        = _this.view        = document.createElement('div'),
+                cursor      = new Cursor(params),
+                sourceList  = new SourceList(params);
 
-            var _this   = this,
-                raw     = _this.getRaw(),
-                view    = document.createElement('div'),
-                params, cursor, sourceList;
-
-            // Customize parameters
-            params = _this.parameters = _extend({"_tags":[]}, defaultParameters, _this.parameters);
+            // storing in params
             params._inputtags = _this;
 
-            cursor = new Cursor(params.cursorHandler, params);
-            sourceList = new SourceList(params.sourceHandler, params);
-            view.setAttribute("class", params.getInputtagsClass(_this));
+            // DOM operation
             view.appendChild(cursor.getView());
             view.appendChild(sourceList.getView());
+            view.setAttribute("class", params.getInputtagsClass(_this));
             raw.setAttribute("style", "display:none");
             raw.parentNode.insertBefore(view, raw);
 
@@ -340,12 +184,129 @@
             view.addEventListener("click", function(){
                 cursor.getView().focus();
             });
+        },
+
+        /**
+         * Object-tag
+         *
+         * @constructor
+         */
+        Tag = function Tag(item, parameters){
+            var _this = this,
+                inputtags = parameters._inputtags,
+                sourceList = parameters._sourceList,
+                view = _this.view = document.createElement('span'),
+                text = document.createElement('span'),
+                remover = document.createElement('span'),
+                name, temp;
+
+            // create right item
+            switch (typeof item){
+
+                case "string":
+                    name = item;
+                    if(parameters.keyName && parameters.valueName){
+                        temp = {};
+                        temp[parameters.keyName] = temp[parameters.valueName] = item;
+                        item = temp;
+                    }else if(parameters.keyName || parameters.valueName){
+                        throw new InputtagsError("Some of item properties is not defined in options (set keyName and valueName).");
+                    }
+                    break;
+
+                case "object":
+                    if(item.keyName?!item.valueName:item.valueName){
+                        throw new InputtagsError("Some of item properties is not defined (set keyName or valueName).");
+                    }
+                    name = item[parameters.valueName];
+                    break;
+
+                default:
+                    throw new InputtagsError("Tags type can be only string or object.");
+                    break;
+            }
+
+            // check item
+            if(inputtags.hasVal(item)){
+                return;
+            }
+
+            // save it
+            _this.item = item;
+
+            // DOM operation
+            text.innerHTML = name;
+            remover.innerHTML = "x";
+            view.appendChild(text);
+            view.appendChild(remover);
+            view.setAttribute("class", parameters.getTagClass(_this));
+            remover.setAttribute("class", parameters.getTagRemoverClass(_this));
+
+            // Remove tag from dom tree and from tag list
+            remover.addEventListener("click", function(){
+                parameters.removeTag.call(parameters._inputtags, _this);
+                inputtags.synchronize();
+            });
+
+            // Add tag
+            parameters.addTag.call(parameters._inputtags, _this);
+            inputtags.synchronize();
+            sourceList.removeAllItems();
+        },
+
+        /**
+         * Object-cursor for tags
+         *
+         * @constructor
+         */
+        Cursor = function Cursor(parameters){
+            var _this = this,
+                callback = parameters.cursorHandler,
+                view = _this.view = document.createElement('input');
+
+            parameters._cursor = _this;
+            view.setAttribute("class", parameters.getCursorClass(_this));
+
+            view.addEventListener("keydown", function(e){
+                if(callback.call(parameters._inputtags, e)){
+                    _this.setVal("");
+                }
+            });
 
         },
 
+        /**
+         * Source list
+         *
+         * @constructor
+         */
+        SourceList = function SourceList(parameters){
+            var _this   = this,
+                params  = _this.parameters  = parameters,
+                view    = _this.view        = document.createElement('div');
+
+            params._sourceList = _this;
+
+            view.setAttribute("class", params.getSourceListClass(_this));
+            view.setAttribute("style", "display:none;");
+
+        };
+
+
+    Inputtags.prototype = {
+        "constructor": Inputtags,
+        "parameters": null,
+        "raw": null,
+        "view": null,
+
+        /**
+         * Get all tags data
+         *
+         * @returns {Array}
+         */
         "getVal":function(){
-            var _this = this,
-                tags = _this.parameters._tags,
+            var _this   = this,
+                tags    = _this.parameters._tags,
                 data = [], i = 0, len = tags.length;
 
             for(;i<len; i++){
@@ -355,11 +316,21 @@
             return data;
         },
 
+        /**
+         * Check the existence of the tag/item
+         *
+         * @param item
+         * @returns {boolean}
+         */
         "hasVal":function(item){
-            var params = this.parameters,
-                tags = params._tags,
-                key = params.keyName,
+            var _this   = this,
+                params  = _this.parameters,
+                tags    = params._tags,
+                key     = params.keyName,
                 i= 0, len = tags.length;
+
+
+            if(params.duplicate)return false;
 
             for(; i<len; i++){
                 if(key && (tags[i].getVal())[key] === item[key]){
@@ -371,17 +342,119 @@
             }
 
             return false;
+        },
+
+        /**
+         * Synchronize object with DOM Element
+         */
+        "synchronize":function(){
+            var _this   = this,
+                params  = _this.parameters,
+                raw     = _this.raw;
+
+            raw.setAttribute("value", JSON.stringify(_this.getVal()));
+            params.onChange.call(_this);
+
         }
+
     };
 
-    if(!window.vitologi)window.vitologi = {};
-    if(!window.vitologi._classes)window.vitologi._classes = {};
+    Tag.prototype = {
+        "constructor": Tag,
+        "view": null,
+        "item": null,
 
-    window.vitologi._classes.Inputtags = Inputtags;
-    window.vitologi._classes.Cursor = Cursor;
-    window.vitologi._classes.Tag = Tag;
-    window.vitologi._classes.SourceList = SourceList;
+        "getVal":function(){
+            return this.item;
+        },
 
-    window.vitologi.inputtags = function(elem, parameters){return new Inputtags(elem, parameters);};
+        "getView":function(){
+            return this.view;
+        }
+
+    };
+
+    Cursor.prototype = {
+        "constructor": Cursor,
+        "view": null,
+
+        // get cursor value
+        "getVal":function(){
+            return this.view.value;
+        },
+
+        // get cursor dom element
+        "getView":function(){
+            return this.view;
+        },
+
+        // set cursor value
+        "setVal":function(val){
+            return this.view.value = val;
+        }
+
+    };
+
+    SourceList.prototype = {
+        "constructor": SourceList,
+        "parameters": null,
+        "view": null,
+
+        // remove items
+        "removeAllItems":function(){
+            var view = this.getView();
+
+            while (view.firstChild) {
+                view.removeChild(view.firstChild);
+            }
+            view.setAttribute("style", "display:none;");
+        },
+
+        // add item to source list
+        "addItem":function(item){
+            var _this       = this,
+                params      = _this.parameters,
+                view        = _this.getView(),
+                cursor      = params._cursor,
+                callback    = params.sourceListHandler,
+                itemView    = document.createElement('a'),
+                name        = (params.valueName?item[params.valueName]:item);
+
+            itemView.setAttribute("href", "#");
+            itemView.setAttribute("class", params.getSourceItemClass(item));
+            itemView.innerHTML = name;
+            view.appendChild(itemView);
+            view.setAttribute("style", "");
+
+            itemView.addEventListener("click", function(e){
+                if(callback.call(params._inputtags, item, e)){
+                    _this.removeAllItems();
+                    cursor.setVal("");
+                }
+            });
+        },
+
+        // get cursor dom element
+        "getView":function(){
+            return this.view;
+        }
+
+    };
+
+
+
+    if (!window.vitologi)window.vitologi = {};
+
+    window.vitologi.inputtags = function (elem, parameters) {
+        return new Inputtags(elem, parameters);
+    };
+
+    // Open prototypes for extending
+    window.vitologi.inputtags._classes = {
+        "Inputtags": Inputtags,
+        "Cursor": Cursor,
+        "Tag": Tag,
+        "SourceList": SourceList
+    };
 
 })(window);
