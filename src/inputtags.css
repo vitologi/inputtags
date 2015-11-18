@@ -3,6 +3,7 @@
     height: inherit;
     display: block;
     width: 100%;
+    box-sizing: border-box;
     padding: 6px 12px;
     font-size: 14px;
     line-height: 1.42857143;
