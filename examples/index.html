@@ -16,42 +16,127 @@
 <body>
 
 <div class="container">
-    <h1>Vitologi inputtags plugin</h1>
+    <div class="text-center">
+        <h1>Vitologi inputtags plugin</h1>
+    </div>
+    <br />
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Description</h2>
+            <hr />
+            <p>
+                The plugin transforms ordinary form inputs, into fields, which allows easy create tags.
+            </p>
+        </div>
+    </div>
+
 
     <div class="row">
         <div class="col-md-12">
             <h2>Simple use</h2>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input id="simple" type="text">
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-control" id="simpleShow"></div>
+                    <br />
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <script>
+                        var simple = document.getElementById("simple"),
+                                simpleInputtags = new Inputtags(simple,{
+                                    "onChange":function(){
+                                        document.getElementById("simpleShow").innerHTML = JSON.stringify(this.getVal());
+                                    }
+                                });
+
+                    </script>
+
+                    <a class="btn btn-link" data-toggle="collapse" href="#collapseSimpleCode" aria-expanded="false">
+                        Code
+                    </a>
+                    <a class="btn btn-link" data-toggle="collapse" href="#collapseSimpleDescription" aria-expanded="false">
+                        Description
+                    </a>
+                    <div class="collapse" id="collapseSimpleCode">
+                        <div class="well">
+                            collapseSimpleCode
+                        </div>
+                    </div>
+                    <div class="collapse" id="collapseSimpleDescription">
+                        <div class="well">
+                            collapseSimpleDescription
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
+
+
     <div class="row">
-        <div class="col-md-12">example</div>
+        <div class="col-md-12">
+            <h2>Repeat tags</h2>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input id="repeat" type="text">
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-control" id="repeatShow"></div>
+                    <br />
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <script>
+                        var simple = document.getElementById("repeat"),
+                                simpleInputtags = new Inputtags(simple,{
+                                    "onChange":function(){
+                                        document.getElementById("repeatShow").innerHTML = JSON.stringify(this.getVal());
+                                    }
+                                });
+
+                    </script>
+
+                    <a class="btn btn-link" data-toggle="collapse" href="#collapseRepeatCode" aria-expanded="false">
+                        Code
+                    </a>
+                    <a class="btn btn-link" data-toggle="collapse" href="#collapseRepeatDescription" aria-expanded="false">
+                        Description
+                    </a>
+                    <div class="collapse" id="collapseRepeatCode">
+                        <div class="well">
+                            collapseRepeatCode
+                        </div>
+                    </div>
+                    <div class="collapse" id="collapseRepeatDescription">
+                        <div class="well">
+                            collapseRepeatDescription
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">example</div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">example</div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">example</div>
-    </div>
+
+
 </div>
-
-
-
-
-<input id="simple" type="text">
-<div id="simpleShow"></div>
-<script>
-    var simple = document.getElementById("simple"),
-        simpleInputtags = new Inputtags(simple,{
-            "onChange":function(){
-                document.getElementById("simpleShow").innerHTML = JSON.stringify(this.getVal());
-            }
-        });
-
-</script>
 
 </body>
 </html>
