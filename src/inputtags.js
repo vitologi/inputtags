@@ -23,7 +23,7 @@
      * @returns {Object} extended object
      * @private
      */
-    var _extend = function _extend() {
+    var _extend = function() {
             if(typeof arguments[0] !== "object")throw new InputtagsError("Can`t merge this shit.");
 
             var base = arguments[0],
@@ -159,7 +159,7 @@
          * @param {Object} parameters some parameters
          * @constructor
          */
-        Inputtags = function Inputtags(element, parameters){
+        Inputtags = function(element, parameters){
 
             if(!(element instanceof HTMLElement))throw new InputtagsError("Wrong argument for create inputtag. Provide " + (typeof element) + "(HTMLElement need)");
 
@@ -191,7 +191,7 @@
          *
          * @constructor
          */
-        Tag = function Tag(item, parameters){
+        Tag = function(item, parameters){
             var _this = this,
                 inputtags = parameters._inputtags,
                 sourceList = parameters._sourceList,
@@ -205,6 +205,7 @@
 
                 case "string":
                     name = item;
+                    //TODO: check if keyName and valueName will be equal 0 (int)
                     if(parameters.keyName && parameters.valueName){
                         temp = {};
                         temp[parameters.keyName] = temp[parameters.valueName] = item;
@@ -259,7 +260,7 @@
          *
          * @constructor
          */
-        Cursor = function Cursor(parameters){
+        Cursor = function(parameters){
             var _this = this,
                 callback = parameters.cursorHandler,
                 view = _this.view = document.createElement('input');
@@ -280,7 +281,7 @@
          *
          * @constructor
          */
-        SourceList = function SourceList(parameters){
+        SourceList = function(parameters){
             var _this   = this,
                 params  = _this.parameters  = parameters,
                 view    = _this.view        = document.createElement('div');
@@ -445,7 +446,7 @@
 
     if (!window.vitologi)window.vitologi = {};
 
-    window.vitologi.inputtags = function (elem, parameters) {
+    window.vitologi.inputtags = function(elem, parameters) {
         return new Inputtags(elem, parameters);
     };
 
