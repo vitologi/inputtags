@@ -9,6 +9,20 @@
     <script src="vendors/bootstrap/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="../src/inputtags.css" />
     <script src="../src/inputtags.js"></script>
+    <style>
+        pre{
+            font-size: 1em;
+            padding: 10px;
+            margin: 0 0 20px;
+            border:0;
+            border-left: 5px solid #dcdcdc;
+            background: #f5f5f5;
+            border-radius: 0;
+        }
+        blockquote{
+            font-size: 1em;
+        }
+    </style>
     <script>
         Inputtags = vitologi.inputtags;
     </script>
@@ -44,7 +58,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-control" id="simpleShow"></div>
+                    <div class="form-control" id="simpleShow">unique tags (example)</div>
                     <br />
                 </div>
 
@@ -53,11 +67,11 @@
                 <div class="col-md-12">
                     <script>
                         var simple = document.getElementById("simple"),
-                                simpleInputtags = new Inputtags(simple,{
-                                    "onChange":function(){
-                                        document.getElementById("simpleShow").innerHTML = JSON.stringify(this.getVal());
-                                    }
-                                });
+                            simpleInputtags = new Inputtags(simple,{
+                                "onChange":function(){
+                                    document.getElementById("simpleShow").innerHTML = JSON.stringify(this.getVal());
+                                }
+                            });
 
                     </script>
 
@@ -68,14 +82,14 @@
                         Description
                     </a>
                     <div class="collapse" id="collapseSimpleCode">
-                        <div class="well">
-                            collapseSimpleCode
-                        </div>
+                        <pre>
+var input = document.getElementById("input"),
+    inputInputtags = new Inputtags(input);</pre>
                     </div>
                     <div class="collapse" id="collapseSimpleDescription">
-                        <div class="well">
-                            collapseSimpleDescription
-                        </div>
+                        <blockquote>
+                            Simple use allows you work with unique tags
+                        </blockquote>
                     </div>
                 </div>
             </div>
@@ -96,7 +110,7 @@
                 </div>
 
                 <div class="col-md-6">
-                    <div class="form-control" id="repeatShow"></div>
+                    <div class="form-control" id="repeatShow">not unique tags (example)</div>
                     <br />
                 </div>
 
@@ -104,12 +118,13 @@
             <div class="row">
                 <div class="col-md-12">
                     <script>
-                        var simple = document.getElementById("repeat"),
-                                simpleInputtags = new Inputtags(simple,{
-                                    "onChange":function(){
-                                        document.getElementById("repeatShow").innerHTML = JSON.stringify(this.getVal());
-                                    }
-                                });
+                        var repeat = document.getElementById("repeat"),
+                            repeatInputtags = new Inputtags(repeat,{
+                                "duplicate":true,
+                                "onChange":function(){
+                                    document.getElementById("repeatShow").innerHTML = JSON.stringify(this.getVal());
+                                }
+                            });
 
                     </script>
 
@@ -120,14 +135,134 @@
                         Description
                     </a>
                     <div class="collapse" id="collapseRepeatCode">
-                        <div class="well">
-                            collapseRepeatCode
-                        </div>
+                        <pre>
+var input = document.getElementById("input"),
+    inputInputtags = new Inputtags(input,{
+        "duplicate":true
+    });</pre>
                     </div>
                     <div class="collapse" id="collapseRepeatDescription">
-                        <div class="well">
-                            collapseRepeatDescription
-                        </div>
+                        <blockquote>
+                            Repeat tags case allows you work with not unique tags
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Tag objects</h2>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input id="object" type="text">
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-control" id="objectShow">tag-objects (example)</div>
+                    <br />
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <script>
+                        var object = document.getElementById("object"),
+                            objectInputtags = new Inputtags(object,{
+                                "keyName":"key",
+                                "valueName":"value",
+                                "onChange":function(){
+                                    document.getElementById("objectShow").innerHTML = JSON.stringify(this.getVal());
+                                }
+                            });
+
+                    </script>
+
+                    <a class="btn btn-link" data-toggle="collapse" href="#objectCollapseCode" aria-expanded="false">
+                        Code
+                    </a>
+                    <a class="btn btn-link" data-toggle="collapse" href="#objectCollapseDescription" aria-expanded="false">
+                        Description
+                    </a>
+                    <div class="collapse" id="objectCollapseCode">
+                        <pre>
+var input = document.getElementById("input"),
+    inputInputtags = new Inputtags(input,{
+        "keyName":"key",
+        "valueName":"value"
+    });</pre>
+                    </div>
+                    <div class="collapse" id="objectCollapseDescription">
+                        <blockquote>
+                            Tags like objects will appear  when in parameters will set "keyName" and "valueName" properties
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Tags sources</h2>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input id="source" type="text">
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-control" id="sourceShow">tags sources (example)</div>
+                    <br />
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <script>
+                        var source = document.getElementById("source"),
+                            sourceInputtags = new Inputtags(source,{
+                                "source":function(cursorValue){
+                                    return ["Tag1","Tag2","Tag3","Tag4","Tag5","Tag6"];
+                                },
+                                "onChange":function(){
+                                    document.getElementById("objectShow").innerHTML = JSON.stringify(this.getVal());
+                                }
+                            });
+
+                    </script>
+
+                    <a class="btn btn-link" data-toggle="collapse" href="#sourceCollapseCode" aria-expanded="false">
+                        Code
+                    </a>
+                    <a class="btn btn-link" data-toggle="collapse" href="#sourceCollapseDescription" aria-expanded="false">
+                        Description
+                    </a>
+                    <div class="collapse" id="sourceCollapseCode">
+                        <pre>
+var input = document.getElementById("input"),
+    inputInputtags = new Inputtags(input,{
+        "source":function(cursorValue){
+        return ["Tag1","Tag2","Tag3","Tag4","Tag5","Tag6"];
+    }
+    });</pre>
+                    </div>
+                    <div class="collapse" id="sourceCollapseDescription">
+                        <blockquote>
+                            Inputtags can use sources provider
+                        </blockquote>
                     </div>
                 </div>
             </div>
