@@ -23,6 +23,15 @@
         blockquote{
             font-size: 1em;
         }
+        .blockExample{
+            position:relative;
+            padding: 5px;
+            margin: 5px;
+            border: 1px solid #979797;
+            background: rgba(0, 0, 0, 0.04);
+            color: #7b7b7b;}
+        .classExample{
+            font-weight: bold;}
     </style>
     <script>
         Inputtags = vitologi.inputtags;
@@ -345,7 +354,8 @@ var input = document.getElementById("input"),
                     </div>
                     <div class="collapse" id="styleCollapseDescription">
                         <blockquote>
-                            Inputtags can be styled by modifying "getClass" handlers of parameters. For example:
+                            In this case we check item and set custom style for it.
+                            <br/>Inputtags can be styled by modifying "getClass" handlers of parameters. For example:
                             <br/>
                             <br/>
                             <ul>
@@ -361,6 +371,73 @@ var input = document.getElementById("input"),
 
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Block's structure</h2>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-12">
+                    Now we observe some basic aspect of plugin structure like a used classes and HTML elements.
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <a class="btn btn-link" data-toggle="collapse" href="#structureCollapseCode" aria-expanded="false">
+                        View
+                    </a>
+                    <a class="btn btn-link" data-toggle="collapse" href="#structureCollapseDescription" aria-expanded="false">
+                        Description
+                    </a>
+                    <div class="collapse" id="structureCollapseCode">
+                        <blockquote>
+                            <div class="blockExample" style="border-style: dashed;">
+                                raw input element (HTML element)
+                            </div>
+                            <div class="blockExample" >
+                                <span class="pull-right classExample">Inputtag</span>
+
+                                <div class="blockExample pull-left classExample">Tag <span style="text-shadow: none;color: black;">x</span></div>
+                                <div class="blockExample pull-left classExample">Tag <span style="text-shadow: none;color: black;">x</span></div>
+                                <div class="blockExample pull-left classExample">Cursor</div>
+
+                                <div class="clearfix"></div>
+
+                                <div class="blockExample pull-left" style="border-style: dashed; margin-top: 20px;">
+                                    <span class="pull-right classExample">SourceList</span>
+                                    <div class="clearfix"></div>
+                                    <div class="blockExample">source list item</div>
+                                    <div class="blockExample">source list item</div>
+                                    <div class="blockExample">source list item</div>
+
+                                    <div class="clearfix"></div>
+
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </blockquote>
+                    </div>
+                    <div class="collapse" id="structureCollapseDescription">
+                        <blockquote>
+                            &nbsp;&nbsp;&nbsp;&nbsp;
+                            There is only four object witch construct Inputtags (Cursor, SourceList, Tag and Inputtags). All of them haves owns view (HTML element) and some individual methods.
+                            You have direct access only to base object (Inputtags), but all constructors putted in <strong>vitologi.inputtags._class</strong> namespace. That allow you overwrite some prototype methods or create object instance.
+                            <br/>&nbsp;&nbsp;&nbsp;&nbsp;
+                            Also there is object with parameters (imagine it like a builder). You can redefine it when create Inputtags from HTML-input.
+
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
 
 
 </div>
