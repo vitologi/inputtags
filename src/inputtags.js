@@ -23,7 +23,7 @@
      * @returns {Object} extended object
      * @private
      */
-    var _extend = function _extend() {
+    var _extend = function() {
             if(typeof arguments[0] !== "object")throw new InputtagsError("Can`t merge this shit.");
 
             var base = arguments[0],
@@ -92,13 +92,13 @@
                     sourceList = params._sourceList,
                     sources, i, len;
 
+                if(cursor.getVal() === "") return sourceList.removeAllItems();
+
                 if(({"13":true, "188":true})[e.keyCode]){
                     e.preventDefault();
                     e.stopPropagation();
 
-                    if(cursor.getVal() === "")return false;
-
-                    return new Tag(cursor.getVal(), params);
+                    return new TagF(cursor.getVal(), params);
                 }
 
                 if(sources = params.source(cursor.getVal())){
@@ -114,15 +114,18 @@
 
             },
 
-            "sourceListHandler": function(item){
+            "sourceListHandler": function(item, e){
                 var params = this.parameters,
                     inputtags = params._inputtags;
+
+                e.preventDefault();
+                e.stopPropagation();
 
                 if(inputtags.hasVal(item)){
                     return false;
                 }
 
-                new Tag(item, params);
+                new TagF(item, params);
 
                 return true;
 
@@ -159,7 +162,7 @@
          * @param {Object} parameters some parameters
          * @constructor
          */
-        Inputtags = function Inputtags(element, parameters){
+        InputtagsF = function Inputtags(element, parameters){
 
             if(!(element instanceof HTMLElement))throw new InputtagsError("Wrong argument for create inputtag. Provide " + (typeof element) + "(HTMLElement need)");
 
@@ -167,8 +170,8 @@
                 params      = _this.parameters  = _extend({"_tags": []}, defaults, parameters),
                 raw         = _this.raw         = element,
                 view        = _this.view        = document.createElement('div'),
-                cursor      = new Cursor(params),
-                sourceList  = new SourceList(params);
+                cursor      = new CursorF(params),
+                sourceList  = new SourceListF(params);
 
             // storing in params
             params._inputtags = _this;
@@ -191,7 +194,7 @@
          *
          * @constructor
          */
-        Tag = function Tag(item, parameters){
+        TagF = function Tag(item, parameters){
             var _this = this,
                 inputtags = parameters._inputtags,
                 sourceList = parameters._sourceList,
@@ -259,7 +262,7 @@
          *
          * @constructor
          */
-        Cursor = function Cursor(parameters){
+        CursorF = function Cursor(parameters){
             var _this = this,
                 callback = parameters.cursorHandler,
                 view = _this.view = document.createElement('input');
@@ -267,7 +270,7 @@
             parameters._cursor = _this;
             view.setAttribute("class", parameters.getCursorClass(_this));
 
-            view.addEventListener("keydown", function(e){
+            view.addEventListener("keyup", function(e){
                 if(callback.call(parameters._inputtags, e)){
                     _this.setVal("");
                 }
@@ -280,7 +283,7 @@
          *
          * @constructor
          */
-        SourceList = function SourceList(parameters){
+        SourceListF = function SourceList(parameters){
             var _this   = this,
                 params  = _this.parameters  = parameters,
                 view    = _this.view        = document.createElement('div');
@@ -293,8 +296,8 @@
         };
 
 
-    Inputtags.prototype = {
-        "constructor": Inputtags,
+    InputtagsF.prototype = {
+        "constructor": InputtagsF,
         "parameters": null,
         "raw": null,
         "view": null,
@@ -359,8 +362,8 @@
 
     };
 
-    Tag.prototype = {
-        "constructor": Tag,
+    TagF.prototype = {
+        "constructor": TagF,
         "view": null,
         "item": null,
 
@@ -374,8 +377,8 @@
 
     };
 
-    Cursor.prototype = {
-        "constructor": Cursor,
+    CursorF.prototype = {
+        "constructor": CursorF,
         "view": null,
 
         // get cursor value
@@ -395,8 +398,8 @@
 
     };
 
-    SourceList.prototype = {
-        "constructor": SourceList,
+    SourceListF.prototype = {
+        "constructor": SourceListF,
         "parameters": null,
         "view": null,
 
@@ -446,15 +449,15 @@
     if (!window.vitologi)window.vitologi = {};
 
     window.vitologi.inputtags = function (elem, parameters) {
-        return new Inputtags(elem, parameters);
+        return new InputtagsF(elem, parameters);
     };
 
     // Open prototypes for extending
     window.vitologi.inputtags._classes = {
-        "Inputtags": Inputtags,
-        "Cursor": Cursor,
-        "Tag": Tag,
-        "SourceList": SourceList
+        "Inputtags": InputtagsF,
+        "Cursor": CursorF,
+        "Tag": TagF,
+        "SourceList": SourceListF
     };
 
 })(window);
