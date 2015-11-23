@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Vitologi:inputtags example</title>
+    <link rel="stylesheet" type="text/css" href="../src/inputtags.css" />
+    <script src="../src/inputtags.js"></script>
+
     <link rel="stylesheet" href="vendors/bootstrap/bootstrap.min.css" />
     <link rel="stylesheet" href="vendors/bootstrap/bootstrap-theme.min.css" />
     <script src="vendors/jquery/jquery-1.11.3.min.js"></script>
     <script src="vendors/bootstrap/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="../src/inputtags.css" />
-    <script src="../src/inputtags.js"></script>
     <style>
         pre{
             font-size: 1em;
@@ -235,10 +236,18 @@ var input = document.getElementById("input"),
                         var source = document.getElementById("source"),
                             sourceInputtags = new Inputtags(source,{
                                 "source":function(cursorValue){
-                                    return ["Tag1","Tag2","Tag3","Tag4","Tag5","Tag6"];
+                                    var source;
+
+                                    if(cursorValue.toLowerCase().indexOf("t") !== -1){
+                                        source = ["Tag1","Tag2","Tag3","Tag4","Tag5","Tag6"];
+                                    }else{
+                                        source = ["Link1","Link2","Link3","Link4","Link5","Link6"];
+                                    }
+
+                                    return source;
                                 },
                                 "onChange":function(){
-                                    document.getElementById("objectShow").innerHTML = JSON.stringify(this.getVal());
+                                    document.getElementById("sourceShow").innerHTML = JSON.stringify(this.getVal());
                                 }
                             });
 
@@ -255,13 +264,96 @@ var input = document.getElementById("input"),
 var input = document.getElementById("input"),
     inputInputtags = new Inputtags(input,{
         "source":function(cursorValue){
-        return ["Tag1","Tag2","Tag3","Tag4","Tag5","Tag6"];
-    }
-    });</pre>
+            var source;
+
+            if(cursorValue.toLowerCase().indexOf("t") !== -1){
+                source = ["Tag1","Tag2","Tag3","Tag4","Tag5","Tag6"];
+            }else{
+                source = ["Link1","Link2","Link3","Link4","Link5","Link6"];
+            }
+
+            return source;
+        }
+});</pre>
                     </div>
                     <div class="collapse" id="sourceCollapseDescription">
                         <blockquote>
                             Inputtags can use sources provider
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Style customization</h2>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input id="style" type="text">
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-control" id="styleShow">changed css class (example)</div>
+                    <br />
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <script>
+                        var style = document.getElementById("style"),
+                            styleInputtags = new Inputtags(style,{
+                                "source":function(cursorValue){
+                                    return ["Tag1","Tag2","Tag3","Link1","Link2","Link3"];
+                                },
+                                "getTagClass":function(tag){
+                                    var text = tag.getVal();
+                                    return (text.indexOf("Link")!== -1)?"bInputtags__tag label-info":"bInputtags__tag";
+                                },
+                                "onChange":function(){
+                                    document.getElementById("styleShow").innerHTML = JSON.stringify(this.getVal());
+                                }
+                            });
+
+                    </script>
+
+                    <a class="btn btn-link" data-toggle="collapse" href="#styleCollapseCode" aria-expanded="false">
+                        Code
+                    </a>
+                    <a class="btn btn-link" data-toggle="collapse" href="#styleCollapseDescription" aria-expanded="false">
+                        Description
+                    </a>
+                    <div class="collapse" id="styleCollapseCode">
+                        <pre>
+var input = document.getElementById("input"),
+    inputInputtags = new Inputtags(input,{
+        "source":function(cursorValue){
+            return ["Tag1","Tag2","Tag3","Link1","Link2","Link3"];
+        },
+        "getTagClass":function(tag){
+            var text = tag.getVal();
+            return (text.indexOf("Link")!== -1)?"bInputtags__tag label-info":"bInputtags__tag";
+        }
+    });</pre>
+                    </div>
+                    <div class="collapse" id="styleCollapseDescription">
+                        <blockquote>
+                            Inputtags can be styled by modifying "getClass" handlers of parameters. For example:
+                            <br/>
+                            <br/>
+                            <ul>
+                                <li>"getInputtagsClass" set css class for Inputtags element</li>
+                                <li>"getTagClass" set css class for Tag element</li>
+                                <li>"getSourceItemClass" set css class for Item element in source list</li>
+                            </ul>
+
                         </blockquote>
                     </div>
                 </div>
