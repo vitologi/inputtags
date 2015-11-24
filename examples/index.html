@@ -23,6 +23,8 @@
         blockquote{
             font-size: 1em;
         }
+        .table>tbody>tr>td{
+            vertical-align: middle;}
         .blockExample{
             position:relative;
             padding: 5px;
@@ -398,7 +400,7 @@ var input = document.getElementById("input"),
                                 raw input element (HTML element)
                             </div>
                             <div class="blockExample" >
-                                <span class="pull-right classExample">Inputtag</span>
+                                <span class="pull-right classExample">Inputtags</span>
 
                                 <div class="blockExample pull-left classExample">Tag <span style="text-shadow: none;color: black;">x</span></div>
                                 <div class="blockExample pull-left classExample">Tag <span style="text-shadow: none;color: black;">x</span></div>
@@ -438,7 +440,410 @@ var input = document.getElementById("input"),
     </div>
 
 
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Parameters and classes API</h2>
+            <hr />
 
+            <div class="row">
+                <div class="col-md-12">
+                    Below, you can find API description of main plugin components.
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <a class="btn btn-link" data-toggle="collapse" href="#paramsCollapseCode" aria-expanded="false">
+                        Classes
+                    </a>
+                    <a class="btn btn-link" data-toggle="collapse" href="#paramsCollapseDescription" aria-expanded="false">
+                        Parameters
+                    </a>
+                    <div class="collapse" id="paramsCollapseCode">
+                        <blockquote>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th width="30%" class="text-center">Class/Method name</th>
+                                    <th class="text-center">Description</th>
+                                </tr>
+                                <tr class="active">
+                                    <td class="text-center"><strong>Inputtags(<i>element, parameters</i>)</strong></td>
+                                    <td>
+                                        Main plugins constructor, it responsible for combine all plugin elements and synchronization with modified input
+                                        <br /><i>element</i> - raw form input (HTML element)
+                                        <br /><i>parameters</i> - configuration object
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>getVal()</td>
+                                    <td>get all tags data</td>
+                                </tr>
+                                <tr>
+                                    <td>hasVal(<i>item</i>)</td>
+                                    <td>
+                                        check the existence of the tag/item
+                                        <br />
+                                        <i>item</i> - tag data
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>synchronize()</td>
+                                    <td>synchronize object with DOM Element</td>
+                                </tr>
+
+
+                                <tr class="active">
+                                    <td class="text-center"><strong>Tag(<i>item, parameters</i>)</strong></td>
+                                    <td>
+                                        Tags constructor
+                                        <br /><i>item</i> - tag data
+                                        <br /><i>parameters</i> - configuration object
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>getView()</td>
+                                    <td>get block's HTML element</td>
+                                </tr>
+                                <tr>
+                                    <td>getVal()</td>
+                                    <td>get tag data</td>
+                                </tr>
+
+
+
+                                <tr class="active">
+                                    <td class="text-center"><strong>Cursor(<i>parameters</i>)</strong></td>
+                                    <td>
+                                        Entry point for input tags
+                                        <br /><i>parameters</i> - configuration object
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>getView()</td>
+                                    <td>get block's HTML element</td>
+                                </tr>
+                                <tr>
+                                    <td>getVal()</td>
+                                    <td>get cursor value</td>
+                                </tr>
+                                <tr>
+                                    <td>setVal(<i>val</i>)</td>
+                                    <td>
+                                        set cursor value
+                                        <br /><i>val</i> - setted text
+                                    </td>
+                                </tr>
+
+                                <tr class="active">
+                                    <td class="text-center"><strong>SourceList(<i>parameters</i>)</strong></td>
+                                    <td>
+                                        List of tags (source)
+                                        <br /><i>parameters</i> - configuration object
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>getView()</td>
+                                    <td>get block's HTML element</td>
+                                </tr>
+                                <tr>
+                                    <td>addItem(<i>item</i>)</td>
+                                    <td>
+                                        append new item to tags list
+                                        <br /><i>item</i> - item (tag data)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>removeAllItems()</td>
+                                    <td>delete all items from tags list</td>
+                                </tr>
+
+                            </table>
+                        </blockquote>
+                    </div>
+                    <div class="collapse" id="paramsCollapseDescription">
+                        <blockquote>
+                            <table class="table table-bordered">
+                                <tr>
+                                    <th width="30%" class="text-center">Property name</th>
+                                    <th class="text-center">Description</th>
+                                </tr>
+
+                                <tr class="active">
+                                    <td>_inputtags</td>
+                                    <td>store current Inputtags object</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>_cursor</td>
+                                    <td>store current Cursor object</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>_sourceList</td>
+                                    <td>store current SourceList object</td>
+                                </tr>
+                                <tr class="active">
+                                    <td>_tags[]</td>
+                                    <td>array of Tag objects</td>
+                                </tr>
+                                <tr>
+                                    <td>duplicate</td>
+                                    <td> {boolean} flag which allows have duplicate tags  </td>
+                                </tr>
+                                <tr>
+                                    <td>keyName</td>
+                                    <td> {string} name of object's identifier (if it is set, that tags data is using like an object)</td>
+                                </tr>
+                                <tr>
+                                    <td>valueName</td>
+                                    <td> {string} name of object's property to show (if it is set, that tags data is using like an object)</td>
+                                </tr>
+                                <tr>
+                                    <td>getInputtagsClass(<i>item</i>)</td>
+                                    <td>
+                                        return string with css class name for set style for Inputtags HTML element
+                                        <br />
+                                        <i>item</i> - Inputtags instance
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>getCursorClass(<i>item</i>)</td>
+                                    <td>
+                                        return string with css class name for set style for Cursor HTML element
+                                        <br />
+                                        <i>item</i> - Cursor instance
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>getTagClass(<i>item</i>)</td>
+                                    <td>
+                                        return string with css class name for set style for Tag HTML element
+                                        <br />
+                                        <i>item</i> - Tag instance
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>getTagRemoverClass(<i>item</i>)</td>
+                                    <td>
+                                        return string with css class name for set style for Tag component (close button)
+                                        <br />
+                                        <i>item</i> - Tag instance
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>getSourceListClass(<i>item</i>)</td>
+                                    <td>
+                                        return string with css class name for set style for SourceList HTML element
+                                        <br />
+                                        <i>item</i> - SourceList instance
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>getSourceItemClass(<i>item</i>)</td>
+                                    <td>
+                                        return string with css class name for set style for SourceList component (list item)
+                                        <br />
+                                        <i>item</i> - tag data object
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>source(item)(<i>item</i>)</td>
+                                    <td>
+                                        return array of tag's data, after receive it will be used for creating source list
+                                        <br />
+                                        <i>item</i> - user input text (value of Cursor)
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>onChange()</td>
+                                    <td>
+                                        execute after add or remove tags
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>cursorHandler(e)(<i>e</i>)</td>
+                                    <td>
+                                        handler for cursor's "keyup" event
+                                        <br />
+                                        <i>e</i> - event object
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>sourceListHandler(<i>item, e</i>)</td>
+                                    <td>
+                                        handler for choosing item in source list
+                                        <br />
+                                        <i>item</i> - chousen list item (tag data)
+                                        <i>e</i> - event object
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>addTag(<i>tag</i>)</td>
+                                    <td>
+                                        function for append tag to collection and HTML element to view
+                                        <br />
+                                        <i>tag</i> - added tag
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>removeTag(<i>tag</i>)</td>
+                                    <td>
+                                        function for remove tag from collection and HTML element to view
+                                        <br />
+                                        <i>tag</i> - removed tag
+                                    </td>
+                                </tr>
+
+                            </table>
+                            * be aware, environments (this) of all executable function can be changed
+
+
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Extend plugin (asynchronous resource creation) </h2>
+            <hr />
+
+            <div class="row">
+                <div class="col-md-6">
+                    <input id="acync" type="text">
+                    <br />
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-control" id="acyncShow">changed css class (example)</div>
+                    <br />
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <script>
+                        var acync = document.getElementById("acync"),
+
+                            // small function for server simulation
+                            serverSimulator = function(needle, callback){
+
+                                window.setTimeout(function(){
+                                    callback(null, ["Tag1","Tag2","Tag3","Link1","Link2","Link3"]);
+                                }, (Math.random()*2)*1000);
+
+                            },
+
+                            acyncInputtags = new Inputtags(acync,{
+
+                                "source":function(cursorValue){
+
+                                    // get current list and cursor
+                                    var list = this._sourceList,
+                                        cursor = this._cursor;
+
+                                    // send request on server
+                                    serverSimulator(cursorValue, function(error, result){
+                                        if(error)throw new Error("Get server data error.");
+
+                                        // clear exist data
+                                        list.removeAllItems();
+
+                                        var aItem = result,
+                                            cursorIsEmpty = cursor.getVal() === "",
+                                            itemRegexp = new RegExp("^"+cursor.getVal()),
+                                            len = aItem.length,
+                                            i = 0, item;
+
+                                        if(!len)return;
+
+                                        // add received data to the list
+                                        for(; i<len; i++){
+                                            item = aItem[i];
+                                            if(cursorIsEmpty || !itemRegexp.test(item))continue;
+                                            list.addItem(result[i]);
+                                        }
+
+
+
+                                    });
+
+                                },
+                                "onChange":function(){
+                                    document.getElementById("styleShow").innerHTML = JSON.stringify(this.getVal());
+                                }
+                            });
+
+                    </script>
+
+                    <a class="btn btn-link" data-toggle="collapse" href="#acyncCollapseCode" aria-expanded="false">
+                        Code
+                    </a>
+                    <a class="btn btn-link" data-toggle="collapse" href="#acyncCollapseDescription" aria-expanded="false">
+                        Description
+                    </a>
+                    <div class="collapse" id="acyncCollapseCode">
+                        <pre>
+var input = document.getElementById("input"),
+
+    // small function for server simulation
+    serverSimulator = function(needle, callback){
+
+        window.setTimeout(function(){
+            callback(null, ["Tag1","Tag2","Tag3","Link1","Link2","Link3"]);
+        }, (Math.random()*2)*1000);
+
+    },
+
+    inputInputtags = new Inputtags(input,{
+
+        "source":function(cursorValue){
+
+            // get current list and cursor
+            var list = this._sourceList,
+                cursor = this._cursor;
+
+            // send request on server
+            serverSimulator(cursorValue, function(error, result){
+                if(error)throw new Error("Get server data error.");
+
+                // clear exist data
+                list.removeAllItems();
+
+                var aItem = result,
+                    cursorIsEmpty = cursor.getVal() === "",
+                    itemRegexp = new RegExp("^"+cursor.getVal()),
+                    len = aItem.length,
+                    i = 0, item;
+
+                if(!len)return;
+
+                // add received data to the list
+                for(; i&lt;len; i++){
+                    item = aItem[i];
+                    if(cursorIsEmpty || !itemRegexp.test(item))continue;
+                    list.addItem(result[i]);
+                }
+            });
+        }
+    });</pre>
+                    </div>
+                    <div class="collapse" id="acyncCollapseDescription">
+                        <blockquote>
+                            Just start typing like "Li" or "T" (uppercase is need), than source list will fill by some items (2s delay).
+                            <br />This is an example of extend plugin. In fact, ajax source feature, will be add in next version (I hope :)).
+                            <br />In case above, you see how easy we can get access to main plugin's components and overwrite them.
+                        </blockquote>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </div>
 
