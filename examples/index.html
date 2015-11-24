@@ -447,7 +447,7 @@ var input = document.getElementById("input"),
 
             <div class="row">
                 <div class="col-md-12">
-                    Below, you can find API description of main plugin components.
+                    Below you can find API description of main plugin components.
                 </div>
 
             </div>
@@ -470,7 +470,7 @@ var input = document.getElementById("input"),
                                 <tr class="active">
                                     <td class="text-center"><strong>Inputtags(<i>element, parameters</i>)</strong></td>
                                     <td>
-                                        Main plugins constructor, it responsible for combine all plugin elements and synchronization with modified input
+                                        Main plugin's constructor, it is responsible for combination of all plugin elements and synchronization with modified input
                                         <br /><i>element</i> - raw form input (HTML element)
                                         <br /><i>parameters</i> - configuration object
                                     </td>
@@ -589,20 +589,20 @@ var input = document.getElementById("input"),
                                 </tr>
                                 <tr>
                                     <td>duplicate</td>
-                                    <td> {boolean} flag which allows have duplicate tags  </td>
+                                    <td> {boolean} flag which allows to have duplicate tags  </td>
                                 </tr>
                                 <tr>
                                     <td>keyName</td>
-                                    <td> {string} name of object's identifier (if it is set, that tags data is using like an object)</td>
+                                    <td> {string} name of object's identifier (if it is set, than tag's data is treated like an object)</td>
                                 </tr>
                                 <tr>
                                     <td>valueName</td>
-                                    <td> {string} name of object's property to show (if it is set, that tags data is using like an object)</td>
+                                    <td> {string} name of object's property to show (if it is set, than tag's data is treated like an object)</td>
                                 </tr>
                                 <tr>
                                     <td>getInputtagsClass(<i>item</i>)</td>
                                     <td>
-                                        return string with css class name for set style for Inputtags HTML element
+                                        returns string with css class name to set style for Inputtags HTML element
                                         <br />
                                         <i>item</i> - Inputtags instance
                                     </td>
@@ -610,7 +610,7 @@ var input = document.getElementById("input"),
                                 <tr>
                                     <td>getCursorClass(<i>item</i>)</td>
                                     <td>
-                                        return string with css class name for set style for Cursor HTML element
+                                        returns string with css class name to set style for Cursor HTML element
                                         <br />
                                         <i>item</i> - Cursor instance
                                     </td>
@@ -618,7 +618,7 @@ var input = document.getElementById("input"),
                                 <tr>
                                     <td>getTagClass(<i>item</i>)</td>
                                     <td>
-                                        return string with css class name for set style for Tag HTML element
+                                        returns string with css class name to set style for Tag HTML element
                                         <br />
                                         <i>item</i> - Tag instance
                                     </td>
@@ -626,7 +626,7 @@ var input = document.getElementById("input"),
                                 <tr>
                                     <td>getTagRemoverClass(<i>item</i>)</td>
                                     <td>
-                                        return string with css class name for set style for Tag component (close button)
+                                        return string with css class name to set style for Tag component (close button)
                                         <br />
                                         <i>item</i> - Tag instance
                                     </td>
@@ -634,7 +634,7 @@ var input = document.getElementById("input"),
                                 <tr>
                                     <td>getSourceListClass(<i>item</i>)</td>
                                     <td>
-                                        return string with css class name for set style for SourceList HTML element
+                                        returns string with css class name to set style for SourceList HTML element
                                         <br />
                                         <i>item</i> - SourceList instance
                                     </td>
@@ -642,7 +642,7 @@ var input = document.getElementById("input"),
                                 <tr>
                                     <td>getSourceItemClass(<i>item</i>)</td>
                                     <td>
-                                        return string with css class name for set style for SourceList component (list item)
+                                        returns string with css class name to set style for SourceList component (list item)
                                         <br />
                                         <i>item</i> - tag data object
                                     </td>
@@ -650,7 +650,7 @@ var input = document.getElementById("input"),
                                 <tr>
                                     <td>source(item)(<i>item</i>)</td>
                                     <td>
-                                        return array of tag's data, after receive it will be used for creating source list
+                                        returns array of tag's data, which is used to create the source list
                                         <br />
                                         <i>item</i> - user input text (value of Cursor)
                                     </td>
@@ -674,14 +674,14 @@ var input = document.getElementById("input"),
                                     <td>
                                         handler for choosing item in source list
                                         <br />
-                                        <i>item</i> - chousen list item (tag data)
+                                        <i>item</i> - chosen list item (tag data)
                                         <i>e</i> - event object
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>addTag(<i>tag</i>)</td>
                                     <td>
-                                        function for append tag to collection and HTML element to view
+                                        function appends tag to collection and HTML element to view
                                         <br />
                                         <i>tag</i> - added tag
                                     </td>
@@ -689,7 +689,7 @@ var input = document.getElementById("input"),
                                 <tr>
                                     <td>removeTag(<i>tag</i>)</td>
                                     <td>
-                                        function for remove tag from collection and HTML element to view
+                                        function removes tag from collection and HTML element to view
                                         <br />
                                         <i>tag</i> - removed tag
                                     </td>
@@ -834,9 +834,9 @@ var input = document.getElementById("input"),
                     </div>
                     <div class="collapse" id="acyncCollapseDescription">
                         <blockquote>
-                            Just start typing like "Li" or "T" (uppercase is need), than source list will fill by some items (2s delay).
-                            <br />This is an example of extend plugin. In fact, ajax source feature, will be add in next version (I hope :)).
-                            <br />In case above, you see how easy we can get access to main plugin's components and overwrite them.
+                            Just start typing like "Li" or "T" (uppercase is need) and source list will be filled by some items (2s delay).
+                            <br />This is an example of extend plugin. In fact, ajax source feature will be added in next version (I hope :)).
+                            <br />In the case above, you see how easily we can get access to main plugin components and overwrite them.
                         </blockquote>
                     </div>
                 </div>
