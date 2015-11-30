@@ -18,11 +18,11 @@
             border:0;
             border-left: 5px solid #dcdcdc;
             background: #f5f5f5;
-            border-radius: 0;
-        }
+            border-radius: 0;}
         blockquote{
-            font-size: 1em;
-        }
+            font-size: 1em;}
+        .form-control{
+            height: inherit;}
         .table>tbody>tr>td{
             vertical-align: middle;}
         .blockExample{
@@ -65,7 +65,7 @@
 
             <div class="row">
                 <div class="col-md-6">
-                    <input id="simple" type="text">
+                    <input id="simple" type="text" value='["Tag1","Tag2","Tag3"]'>
                     <br />
                 </div>
 
@@ -79,11 +79,11 @@
                 <div class="col-md-12">
                     <script>
                         var simple = document.getElementById("simple"),
-                            simpleInputtags = new Inputtags(simple,{
-                                "onChange":function(){
-                                    document.getElementById("simpleShow").innerHTML = JSON.stringify(this.getVal());
-                                }
-                            });
+                                simpleInputtags = new Inputtags(simple,{
+                                    "onChange":function(){
+                                        document.getElementById("simpleShow").innerHTML = JSON.stringify(this.getVal());
+                                    }
+                                });
 
                     </script>
 
@@ -117,7 +117,7 @@ var input = document.getElementById("input"),
 
             <div class="row">
                 <div class="col-md-6">
-                    <input id="repeat" type="text">
+                    <input id="repeat" type="text" value='["Tag1","Tag1","Tag1"]'>
                     <br />
                 </div>
 
@@ -131,12 +131,12 @@ var input = document.getElementById("input"),
                 <div class="col-md-12">
                     <script>
                         var repeat = document.getElementById("repeat"),
-                            repeatInputtags = new Inputtags(repeat,{
-                                "duplicate":true,
-                                "onChange":function(){
-                                    document.getElementById("repeatShow").innerHTML = JSON.stringify(this.getVal());
-                                }
-                            });
+                                repeatInputtags = new Inputtags(repeat,{
+                                    "duplicate":true,
+                                    "onChange":function(){
+                                        document.getElementById("repeatShow").innerHTML = JSON.stringify(this.getVal());
+                                    }
+                                });
 
                     </script>
 
@@ -173,7 +173,7 @@ var input = document.getElementById("input"),
 
             <div class="row">
                 <div class="col-md-6">
-                    <input id="object" type="text">
+                    <input id="object" type="text" value='[{"key":"key1","value":"value1"},{"key":"key2","value":"value2"},{"key":"key3","value":"value1","some":"uncnown value"},"autoFixValue"]'>
                     <br />
                 </div>
 
@@ -187,13 +187,13 @@ var input = document.getElementById("input"),
                 <div class="col-md-12">
                     <script>
                         var object = document.getElementById("object"),
-                            objectInputtags = new Inputtags(object,{
-                                "keyName":"key",
-                                "valueName":"value",
-                                "onChange":function(){
-                                    document.getElementById("objectShow").innerHTML = JSON.stringify(this.getVal());
-                                }
-                            });
+                                objectInputtags = new Inputtags(object,{
+                                    "keyName":"key",
+                                    "valueName":"value",
+                                    "onChange":function(){
+                                        document.getElementById("objectShow").innerHTML = JSON.stringify(this.getVal());
+                                    }
+                                });
 
                     </script>
 
@@ -231,7 +231,7 @@ var input = document.getElementById("input"),
 
             <div class="row">
                 <div class="col-md-6">
-                    <input id="source" type="text">
+                    <input id="source" type="text"  value='["Tag1","Link1"]'>
                     <br />
                 </div>
 
@@ -245,22 +245,22 @@ var input = document.getElementById("input"),
                 <div class="col-md-12">
                     <script>
                         var source = document.getElementById("source"),
-                            sourceInputtags = new Inputtags(source,{
-                                "source":function(cursorValue){
-                                    var source;
+                                sourceInputtags = new Inputtags(source,{
+                                    "source":function(cursorValue){
+                                        var source;
 
-                                    if(cursorValue.toLowerCase().indexOf("t") !== -1){
-                                        source = ["Tag1","Tag2","Tag3","Tag4","Tag5","Tag6"];
-                                    }else{
-                                        source = ["Link1","Link2","Link3","Link4","Link5","Link6"];
+                                        if(cursorValue.toLowerCase().indexOf("t") !== -1){
+                                            source = ["Tag1","Tag2","Tag3","Tag4","Tag5","Tag6"];
+                                        }else{
+                                            source = ["Link1","Link2","Link3","Link4","Link5","Link6"];
+                                        }
+
+                                        return source;
+                                    },
+                                    "onChange":function(){
+                                        document.getElementById("sourceShow").innerHTML = JSON.stringify(this.getVal());
                                     }
-
-                                    return source;
-                                },
-                                "onChange":function(){
-                                    document.getElementById("sourceShow").innerHTML = JSON.stringify(this.getVal());
-                                }
-                            });
+                                });
 
                     </script>
 
@@ -306,7 +306,7 @@ var input = document.getElementById("input"),
 
             <div class="row">
                 <div class="col-md-6">
-                    <input id="style" type="text">
+                    <input id="style" type="text" value='["Tag1","Link1"]'>
                     <br />
                 </div>
 
@@ -320,18 +320,18 @@ var input = document.getElementById("input"),
                 <div class="col-md-12">
                     <script>
                         var style = document.getElementById("style"),
-                            styleInputtags = new Inputtags(style,{
-                                "source":function(cursorValue){
-                                    return ["Tag1","Tag2","Tag3","Link1","Link2","Link3"];
-                                },
-                                "getTagClass":function(tag){
-                                    var text = tag.getVal();
-                                    return (text.indexOf("Link")!== -1)?"bInputtags__tag label-info":"bInputtags__tag";
-                                },
-                                "onChange":function(){
-                                    document.getElementById("styleShow").innerHTML = JSON.stringify(this.getVal());
-                                }
-                            });
+                                styleInputtags = new Inputtags(style,{
+                                    "source":function(cursorValue){
+                                        return ["Tag1","Tag2","Tag3","Link1","Link2","Link3"];
+                                    },
+                                    "getTagClass":function(tag){
+                                        var text = tag.getVal();
+                                        return (text.indexOf("Link")!== -1)?"bInputtags__tag label-info":"bInputtags__tag";
+                                    },
+                                    "onChange":function(){
+                                        document.getElementById("styleShow").innerHTML = JSON.stringify(this.getVal());
+                                    }
+                                });
 
                     </script>
 
@@ -479,6 +479,14 @@ var input = document.getElementById("input"),
                                 <tr>
                                     <td>getVal()</td>
                                     <td>get all tags data</td>
+                                </tr>
+                                <tr>
+                                    <td>setVal(<i>item</i>)</td>
+                                    <td>
+                                        set tags data
+                                        <br />
+                                        <i>item</i> - array or JSON-string of tags
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>hasVal(<i>item</i>)</td>
@@ -714,7 +722,7 @@ var input = document.getElementById("input"),
 
             <div class="row">
                 <div class="col-md-6">
-                    <input id="acync" type="text">
+                    <input id="async" type="text" value='["Tag1","Link1"]'>
                     <br />
                 </div>
 
@@ -727,56 +735,56 @@ var input = document.getElementById("input"),
             <div class="row">
                 <div class="col-md-12">
                     <script>
-                        var acync = document.getElementById("acync"),
+                        var async = document.getElementById("async"),
 
-                            // small function for server simulation
-                            serverSimulator = function(needle, callback){
+                        // small function for server simulation
+                                serverSimulator = function(needle, callback){
 
-                                window.setTimeout(function(){
-                                    callback(null, ["Tag1","Tag2","Tag3","Link1","Link2","Link3"]);
-                                }, (Math.random()*2)*1000);
-
-                            },
-
-                            acyncInputtags = new Inputtags(acync,{
-
-                                "source":function(cursorValue){
-
-                                    // get current list and cursor
-                                    var list = this._sourceList,
-                                        cursor = this._cursor;
-
-                                    // send request on server
-                                    serverSimulator(cursorValue, function(error, result){
-                                        if(error)throw new Error("Get server data error.");
-
-                                        // clear exist data
-                                        list.removeAllItems();
-
-                                        var aItem = result,
-                                            cursorIsEmpty = cursor.getVal() === "",
-                                            itemRegexp = new RegExp("^"+cursor.getVal()),
-                                            len = aItem.length,
-                                            i = 0, item;
-
-                                        if(!len)return;
-
-                                        // add received data to the list
-                                        for(; i<len; i++){
-                                            item = aItem[i];
-                                            if(cursorIsEmpty || !itemRegexp.test(item))continue;
-                                            list.addItem(result[i]);
-                                        }
-
-
-
-                                    });
+                                    window.setTimeout(function(){
+                                        callback(null, ["Tag1","Tag2","Tag3","Link1","Link2","Link3"]);
+                                    }, (Math.random()*2)*1000);
 
                                 },
-                                "onChange":function(){
-                                    document.getElementById("acyncShow").innerHTML = JSON.stringify(this.getVal());
-                                }
-                            });
+
+                                asyncInputtags = new Inputtags(async,{
+
+                                    "source":function(cursorValue){
+
+                                        // get current list and cursor
+                                        var list = this._sourceList,
+                                                cursor = this._cursor;
+
+                                        // send request on server
+                                        serverSimulator(cursorValue, function(error, result){
+                                            if(error)throw new Error("Get server data error.");
+
+                                            // clear exist data
+                                            list.removeAllItems();
+
+                                            var aItem = result,
+                                                    cursorIsEmpty = cursor.getVal() === "",
+                                                    itemRegexp = new RegExp("^"+cursor.getVal()),
+                                                    len = aItem.length,
+                                                    i = 0, item;
+
+                                            if(!len)return;
+
+                                            // add received data to the list
+                                            for(; i<len; i++){
+                                                item = aItem[i];
+                                                if(cursorIsEmpty || !itemRegexp.test(item))continue;
+                                                list.addItem(result[i]);
+                                            }
+
+
+
+                                        });
+
+                                    },
+                                    "onChange":function(){
+                                        document.getElementById("acyncShow").innerHTML = JSON.stringify(this.getVal());
+                                    }
+                                });
 
                     </script>
 
