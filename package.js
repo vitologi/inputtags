@@ -1,6 +1,6 @@
 Package.describe({
   name: 'vitologi:inputtags',
-  version: '0.9.5',
+  version: '0.9.6',
   summary: 'Converts your input to field of tags.',
   git: 'https://github.com/Vitologi/inputtags.git',
   documentation: 'README.md'
