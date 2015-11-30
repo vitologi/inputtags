@@ -187,6 +187,8 @@
             view.addEventListener("click", function(){
                 cursor.getView().focus();
             });
+
+            _this.setVal(element.value);
         },
 
         /**
@@ -317,6 +319,46 @@
             }
 
             return data;
+        },
+
+        /**
+         * Set all tags data
+         *
+         */
+        "setVal":function(data){
+            var _this   = this,
+                i, len;
+
+            if(!data)return;
+
+            switch(typeof data){
+
+                case "string":
+                    try{
+                        data = JSON.parse(data);
+                    }catch(e){
+                        throw new InputtagsError("Can`t set exists inputtags value.");
+                    }
+                    break;
+
+                case "object":
+                    if(!Array.isArray(data)){
+                        data = [data];
+                    }
+                    break;
+
+                default:
+                    throw new InputtagsError("Try to set not allowed value.");
+                    break;
+
+
+            }
+
+            i = 0; len = data.length;
+            for(;i<len; i++){
+                new TagF(data[i], _this.parameters);
+            }
+
         },
 
         /**
