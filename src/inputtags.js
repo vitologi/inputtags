@@ -390,6 +390,24 @@
         },
 
         /**
+         * Clear all tags
+         *
+         * @void    - remove all tags from inputtags
+         */
+        "clear":function(){
+            var _this = this,
+                tags = _this.parameters._tags,
+                i = 0, len = tags.length;
+
+            for(; i<len; i++){
+                tags[i].getView().parentNode.removeChild(tags[i].getView());
+            }
+
+            _this.parameters._tags = [];
+            _this.synchronize();
+        },
+
+        /**
          * Synchronize object with DOM Element
          */
         "synchronize":function(){
